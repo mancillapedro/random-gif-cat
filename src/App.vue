@@ -1,7 +1,15 @@
 <template>
   <div id="app">
     <h1>Random Gif Cat</h1>
-    <form-search @valuesForm="getGatito" />
+    <form-search @valuesForm="getGatito" :disabled="disabled" />
+    <h3 v-if="disabled">Loading...</h3>
+    <img
+      v-if="srcImg"
+      :src="srcImg"
+      alt="gif gatito"
+      :class="{ 'd-none': disabled }"
+      @load="disabled = false"
+    />
   </div>
 </template>
 
@@ -10,13 +18,19 @@ import FormSearch from "./components/FormSearch.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      srcImg: "",
+      disabled: false,
+    };
+  },
   components: {
     FormSearch,
   },
   methods: {
-    async getGatito(e) {
-      // https://cataas.com/cat/gif/says/holi?filter=sepia&color=orange&size=40
-      console.log(e.path);
+    getGatito(e) {
+      this.disabled = true;
+      this.srcImg = `https://cataas.com/cat/gif/says/${e.path}`;
     },
   },
 };
@@ -28,6 +42,9 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+.d-none {
+  display: none;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,5 +54,8 @@ export default {
   min-height: 100vh;
   background-color: #add8e6;
   padding-top: 60px;
+}
+h1 {
+  margin-bottom: 2rem;
 }
 </style>
