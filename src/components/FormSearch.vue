@@ -3,7 +3,7 @@
     <fieldset :disabled="disabled">
       <ul>
         <li>
-          <label for="title">Titulo: </label>
+          <label for="title" v-text="`Titulo: `" />
           <div>
             <input
               id="title"
@@ -16,10 +16,10 @@
           </div>
         </li>
         <li>
-          <label for="filter">Filtro: </label>
+          <label for="filter" v-text="`Filtro: `" />
           <div>
             <select id="filter" name="filter" v-model="filter" required>
-              <option value="" disabled>Selecciona un filtro...</option>
+              <option value="" v-text="`Selecciona un filtro...`" disabled />
               <option
                 v-for="(filter, i) in selects.filters"
                 :key="i"
@@ -30,10 +30,10 @@
           </div>
         </li>
         <li>
-          <label for="color">Color: </label>
+          <label for="color" v-text="`Color: `" />
           <div>
             <select id="color" name="color" v-model="color" required>
-              <option value="" disabled>Selecciona un color...</option>
+              <option value="" v-text="`Selecciona un color...`" disabled />
               <option
                 v-for="(value, key) in selects.colors"
                 :key="value"
@@ -45,7 +45,7 @@
           </div>
         </li>
         <li>
-          <label for="size">Tamaño: </label>
+          <label for="size" v-text="`Tamaño: `" />
           <div>
             <input
               id="size"
@@ -58,7 +58,11 @@
           </div>
         </li>
       </ul>
-      <button type="submit">Obtener mi gatito</button>
+      <button
+        type="submit"
+        v-text="`Obtener mi gatito`"
+
+      />
     </fieldset>
   </form>
 </template>
@@ -74,9 +78,9 @@ export default {
   },
   data: function () {
     return {
-      title: "",
-      filter: "",
-      color: "",
+      title: null,
+      filter: null,
+      color: null,
       size: null,
       selects: {
         filters: [
@@ -104,15 +108,18 @@ export default {
     parseInputs() {
       return `${this.title}?filter=${this.filter}&color=${this.color}&size=${this.size}`;
     },
+    // disabledBtn() {
+    //   return !(this.title && this.filter && this.color && this.size);
+    // },
   },
   methods: {
     valuesForm() {
       this.$emit("valuesForm", { path: this.parseInputs });
     },
     cleanValues() {
-      this.title = "";
-      this.filter = "";
-      this.color = "";
+      this.title = null;
+      this.filter = null;
+      this.color = null;
       this.size = null;
     },
   },
@@ -120,9 +127,9 @@ export default {
     color(newColor) {
       this.styleObj["background-color"] = newColor || "gray";
     },
-    disabled(newDisabled){
-      newDisabled || this.cleanValues()
-    }
+    disabled(newDisabled) {
+      newDisabled || this.cleanValues();
+    },
   },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <h1>Random Gif Cat</h1>
+    <h1 v-text="`Random Gif Cat`" />
     <form-search @valuesForm="getGatito" :disabled="disabled" />
-    <h3 v-if="disabled">Loading...</h3>
+    <h3 v-if="disabled" v-text="`Loading...`" />
     <img
       v-if="srcImg"
       :src="srcImg"
